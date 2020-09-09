@@ -1,0 +1,129 @@
+
+Declare structure abnew
+	Set anew as double and set to 232.
+	Set bnew as double and set to 320.
+Set the struct calling to newcenter.
+
+Declare function prototype variable double radius.
+Declare function prototype variable double radianX.
+Declare function prototype variable double radianY.
+Declare function prototype variable double xnew.
+Declare function prototype variable double ynew.
+
+Set pi as constant double and initialize 3.14159265.
+Declare integer user.
+
+Main function.
+
+Label restart.
+	Display the "MINI PROJECT".
+	Display the "CIRCLE SOLVER".
+
+Set the system to pause.
+Set the system to clear the window.
+
+Set a as double and set to 256.
+Set b as double and set to 256.
+
+Declare size of array rad to 100.
+Point the value of rad as *ptrrad.
+
+Declare size of array xbaru to 100.
+Declare size of array ybaru to 100.
+
+Declare size of array x to 100.
+Declare size of array y to 100.
+
+Point the value of x as *ptrx.
+Point the value of y as *ptry.
+
+Read value in "appendix1_g3.txt".
+
+Label main_again.
+	Display the Question 1.
+	Display table and showing point x, point y, radius, angle x and angle y.
+	
+In a for loop, initialize i to zero and i is increment value but not more than 100.
+	The value in "appendix1_g3.txt" is insert into array x and y.
+
+	Call function radius and set the value to array rad.
+	Call function radianX and set the value to array angleX.
+	Call function radianY and set the value to array angleY. 
+
+	Set radnew as double and input the value in array rad.
+	Set radXnew as double and input the value in array angleX.
+	Set radYnew as double and input the value in array angleY.
+
+	Call function xnew and set the value to array xbaru.
+	Call function ynew and set the value to array ybaru.
+
+Set the output in two decimal places.
+Display the value x, y and rad in array by pointing the value using pointer. 
+Display the in array angleX and array angleY after multiple it by 180 and dived by constant pi to change it into degree form.
+Display all the value in a table.
+Display "Proceed to next question".
+
+Write the value of array angleX in degree and array angleY in degree in "Angle_in_Degree.txt" file.
+Close the command to write in file.
+
+Set the system to pause.
+Set the system to clear the window.
+
+Label main_again2.
+	Display the Question 2.
+
+In a for loop, initialize i to zero and i is increment value but not more than 100.
+	Display table and showing the point of new x and new y.
+
+
+Set the system to pause.
+Set the system to clear the window.
+
+Display the instruction asking the user to enter 1 to return to question 1, enter 2 to return to question 2, enter 3 to restart the program and enter 0 to end the program.
+
+Label again.
+	Ask user to enter any selection.
+
+	If user equal to zero.
+	Set the system to clear the window.
+	Display "End of program. Thank you!"
+
+	If user equal to one.
+	Set the system to clear the window.
+	Go to label main_again.
+
+	If user equal to two.
+	Set the system to clear the window.
+	Go to lable main_again2.
+
+	If user equal to three.
+	Set the system to clear the window.
+	Go to label restart.
+
+	If user is not equal to zero, one, two and three.
+	Display "Invalid command!"
+	Go to label again.
+
+End of main function.
+
+	In function definition radius.
+	Calculate the formula to find radius using formula sqrt(pow((x-a),2)+pow((y-b),2)).
+	Return value.
+
+	In function definition radianX.
+	Calculate the formula to find angle of cos x using formula acos((x-a)/radius).
+	Return value.
+
+	In function definition radianY.
+	Calculate the formula to find angle of sin y using formula asin((y-b)/radius).
+	Return value.
+
+	In function definition xnew.
+	Calculate the formula to find new x using formula (radnew*cos(radXnew)) + newcenter.anew.
+	Return value.
+
+	In function definition ynew.
+	Calculate the formula to find new y using formula (radnew*sin(radYnew)) + newcenter.bnew.
+	Return value.
+	
+	
