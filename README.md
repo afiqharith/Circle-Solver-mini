@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="images/Github.png" width="250" height="250">
+</div>
+
 # 💡 Circle Solver Mini Project
 
 📌 This is a group mini project as a requirement to pass the subject of Computer Programming in my 3rd semester.
