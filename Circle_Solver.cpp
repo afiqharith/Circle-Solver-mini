@@ -1,247 +1,100 @@
 // ECE 431
 // Circle Solver by group 3
-
-//Member:   1. Afiq Harith Bin Ahamad
-//          2. Zulfikar Firdaus Bin Kamis
-//          3. Nursyamimi Binti Norazrin
-
-//1. Control structure  *
+//1. Control structure  X
 //3. Function           *
 //4. Array              *
 //5. Pointers           *
 //6. File processing    *
-//7. Structure          *
+//7. Structure          X
 
 #include <iostream>
-#include <cmath> //using math library
-#include <fstream> //input and output stream class to operate on files
-#include <stdlib.h> // "cls" & "pause"
-#include <iomanip> //set precision
-#include <windows.h> //timer
-using namespace std;
+#include <fstream>
+#include <string>
+#include <cmath>
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::ofstream;
+using std::string;
 
-struct abnew{
-    double anew = 232;
-    double bnew = 320;
-} newcenter;
-
-//function prototype
-double radius(double, double, double, double);
-double radianX(double, double, double);
-double radianY(double, double, double);
-double xnew(double, abnew newcenter, double);
-double ynew(double, abnew newcenter, double);
-
-
-//variable
+const double centroidA = 256;
+const double centroidB = 256;
+const double new_centroidA = 232;
+const double new_centroidB = 320;
 const double pi = 3.14159265;
-int user;
+const int SIZE = 100;
 
-int main(){
+double x[SIZE], y[SIZE], radius_val[SIZE], angle_x[SIZE], angle_y[SIZE]; // Question 1
+double new_x[SIZE], new_y[SIZE];                                         // Question 2
 
-restart:
-    cout << endl;
-    cout << "       ::::    ::::  ::::::::::: ::::    ::: :::::::::::      :::::::::  :::::::::   ::::::::  ::::::::::: :::::::::: :::::::: :::::::::::\n";
-    cout << "       +:+:+: :+:+:+     :+:     :+:+:   :+:     :+:          :+:    :+: :+:    :+: :+:    :+:     :+:     :+:       :+:    :+:    :+:    \n";
-    cout << "       +:+ +:+:+ +:+     +:+     :+:+:+  +:+     +:+          +:+    +:+ +:+    +:+ +:+    +:+     +:+     +:+       +:+           +:+    \n";
-    cout << "       +#+  +:+  +#+     +#+     +#+ +:+ +#+     +#+          +#++:++#+  +#++:++#:  +#+    +:+     +#+     +#++:++#  +#+           +#+    \n";
-    cout << "       +#+       +#+     +#+     +#+  +#+#+#     +#+          +#+        +#+    +#+ +#+    +#+     +#+     +#+       +#+           +#+    \n";
-    cout << "       #+#       #+#     #+#     #+#   #+#+#     #+#          #+#        #+#    #+# #+#    #+# #+# #+#     #+#       #+#    #+#    #+#    \n";
-    cout << "       ###       ### ########### ###    #### ###########      ###        ###    ###  ########   #####      ########## ########     ###\n\n\n\n";
+// usage of pointer
+double *ptrnew_x = new_x;
+double *ptrnew_y = new_y;
 
-    cout << "              ######  #### ########   ######  ##       ########     ######   #######  ##       ##     ## ######## ########\n";
-    cout << "             ##    ##  ##  ##     ## ##    ## ##       ##          ##    ## ##     ## ##       ##     ## ##       ##     ## \n";
-    cout << "             ##        ##  ##     ## ##       ##       ##          ##       ##     ## ##       ##     ## ##       ##     ## \n";
-    cout << "             ##        ##  ########  ##       ##       ######       ######  ##     ## ##       ##     ## ######   ########  \n";
-    cout << "             ##        ##  ##   ##   ##       ##       ##                ## ##     ## ##        ##   ##  ##       ##   ##   \n";
-    cout << "             ##    ##  ##  ##    ##  ##    ## ##       ##          ##    ## ##     ## ##         ## ##   ##       ##    ##  \n";
-    cout << "              ######  #### ##     ##  ######  ######## ########     ######   #######  ########    ###    ######## ##     ## by Group 3\n";
-    cout << endl;
-    cout <<endl;
-    system ("pause");
-    system ("cls");
+class Calculation
+{
 
-    // constant old center point a,b
-    double a = 256; //a centerOld
-    double b = 256; //b centerOld
+public:
+    // Calculate radius
+    double radius(double x, double y, double centroidA, double centroidB)
+    {
+        return sqrt(pow((x - centroidA), 2) + pow((y - centroidA), 2));
+    }
 
-    //array & pointer
-    double rad[100]; // total value of radius = 100
-    double *ptrrad = rad; // pointer rad
-    double angleX[100]; // total value of degree = 100
-    double angleY[100]; // total value of degree = 100
+    // Calculate angle for x (cos x)
+    double radian_x(double radius_val, double x, double centroidA)
+    {
+        return acos((x - centroidA) / radius_val);
+    }
 
-    //array refer by Xnew func & Ynew func
-    double xbaru[100]; //total value of Xnew array size =100
-    double ybaru[100]; // total value of Ynew array size = 100
+    // Calculate angle of y (sin y)
+    double radian_y(double radius_val, double y, double centroidA)
+    {
+        return asin((y - centroidA) / radius_val);
+    }
 
-    //array from file txt
-    double x[100]; //total value of x in txt file=100
-    double y[100]; //total value of y in txt file=100
+    // Get new x value
+    double get_new_x(double radius_val, double new_centroidA, double angle_x)
+    {
+        return (radius_val * cos(angle_x)) + new_centroidA;
+    }
 
-    //pointer from file txt
-    double *ptrx = x; // array using pointer
-    double *ptry = y; // array using pointer
+    // Get new y value
+    double get_new_y(double radius_val, double new_centroidB, double angle_y)
+    {
+        return (radius_val * sin(angle_y)) + new_centroidB;
+    }
 
-    ifstream read("appendix1_g3.txt"); //read value of x and y in appendix1_g3 txt file
+} cal;
 
-    main_again:
-            cout << "\nQuestion 1: \n";
-            cout << "Table below shows values of Radius, Angles of X and Y when center point is C(a, b) = C(256,256).\n";
-            cout << "\nNote: For reference, the list of the angles recorded in Degree.txt file.\n";
+int main()
+{
+    int index;
 
+    ifstream read("appendix1_g3.txt");
+    ofstream writexy("new_xy.csv");
+    ofstream write_angle_deg("angle_in_degree.csv");
 
-            cout << "\n _______________________________________________\n";
-            cout << "|No.\t|Coor X\t|Coor Y\t|Radius\t|AngleX\t|AngleY\t|\n";
-            cout << " _______________________________________________\n";
+    for (index = 0; index < SIZE; index++)
+    {
+        read >> x[index];
+        read >> y[index];
 
-        for(int i=0;i<100;i++){
+        // Question 1
+        radius_val[index] = cal.radius(x[index], y[index], centroidA, centroidB);
+        angle_x[index] = cal.radian_x(radius_val[index], x[index], centroidA);
+        angle_y[index] = cal.radian_y(radius_val[index], y[index], centroidB);
 
-            read >> x[i]; // read value of x from appendix1_g3
-            read >> y[i]; // read value of y from appendix1_g3
+        // Question 2
+        new_x[index] = cal.get_new_x(radius_val[index], new_centroidA, angle_x[index]);
+        new_y[index] = cal.get_new_y(radius_val[index], new_centroidB, angle_y[index]);
 
-            //function call
-            //function call radius
-            rad[i] = radius(x[i], y[i], a, b); //sub values calculated in function radius() into rad[i]
-            //function call radian for x
-            angleX[i] = radianX(rad[i], x[i], a);// sub values calculated in function radianX() into angleX[i]
-            //function call radian for y
-            angleY[i] = radianY(rad[i], y[i], b);// sub values calculated in function radianY() into angleY[i]
-
-            double radnew = rad[i];
-            double radXnew = angleX[i];
-            double radYnew = angleY[i];
-
-            //function call for new x given Q2
-            xbaru[i] = xnew(radnew, newcenter, radXnew);// sub values calculated in xnew() function into xbaru
-            //function call for new y given Q2
-            ybaru[i] = ynew(radnew, newcenter, radXnew);// sub values calculated in ynew() function into ybaru
-
-        cout << fixed << showpoint << setprecision(2); // set decimal places to 2decimal
-        cout << "|" <<i+1 << "\t|" << *(ptrx+i) << "\t|" << *(ptry+i) << "\t|" << *(ptrrad+i) << "\t|" << (angleX[i]*180)/pi << "\t|" << (angleY[i]*180)/pi << "\t|\n";
-        cout << "|\t|\t|\t|\t|\t|\t|\n";
-        }
-
-        cout << "-------------------------------------------------\n\n\n";
-        cout << "Proceed to next question . . .\n";
-
-    //save to txt file
-    ofstream write1("Angle_in_Degree.txt");
-        write1 << "COS X\tSIN Y" << endl;
-        for (int i=0; i< 100; i++){
-
-            write1 << (angleX[i]*180)/pi << "\t" << (angleY[i]*180)/pi << endl; //
-        }
-        write1.close(); //close to write new txt file for Q2
-
-        system ("pause");
-        system ("cls");
-
-    main_again2:
-        cout << "\nQuestion 2: \n";
-        cout << "The points of X and Y changed when new center point is given. New center point,C(a, b) = C(232, 320).\n";
-        cout << "Note: For reference, the new X and Y points recorded in PointXYnew.txt  file.\n\n";
-
-    //Q2 save to txt file
-    ofstream write2("PointXYnew.txt");
-        write2 << "Points X\tPoints Y\n";
-
-        for (int i=0; i<100; i++){
-            write2 << xbaru[i] << "\t\t" << ybaru[i] << endl; //write value of x&y into txt file
-
-        }
-
-        cout << " _______________________\n";
-        cout << "|No.\t|X new\t|Y new  |\n";
-        cout << " _______________________\n";
-
-            for(int i=0; i<100; i++){
-
-                cout << "|" << i+1 << "\t|" << xbaru[i] << "\t|" << ybaru[i] << " |\n";
-                cout << "|\t|\t|\t|\n";
-
-            } //for loop
-
-            cout << "-------------------------\n";
-            system ("pause");
-            system ("cls");
-
-
-            cout << "\n\t\t****************************\n";
-            cout << "\t\t*                          *\n";
-            cout << "\t\t* 1- Return to Question 1  *\n";
-            cout << "\t\t* 2- Return to Question 2  *\n";
-            cout << "\t\t* 3- Restart program       *\n";
-            cout << "\t\t* 0- Exit                  *\n";
-            cout << "\t\t*                          *\n";
-            cout << "\t\t****************************\n\n";
-
-            again:
-            cout << "Enter any selection: \n";
-            cin >> user;
-
-                if (user == 0){
-
-                    system ("cls");
-                    cout << "\nEnd of program. Thank you!\n\n";
-                    return 0; // return 0
-                }
-
-                if (user == 1){
-
-                    system ("cls"); //refresh system
-                    goto main_again; //looping to main_again
-                }
-
-                if (user == 2){
-
-                    system ("cls");
-                    goto main_again2;
-                }
-
-                if (user == 3){
-
-                    system ("cls");
-                    goto restart;
-                }
-
-                if (user != 0 && user != 1 && user != 2 && user != 3){
-
-                    cout << "Invalid command!\n\n";
-                    goto again;
-                }
+        // writexy << new_x[index] << "," << new_y[index] << endl;
+        writexy << *(ptrnew_x + index) << "," << *(ptrnew_y + index) << endl;
+        write_angle_deg << ((angle_x[index] * 180) / pi) << "," << ((angle_y[index] * 180) / pi) << endl;
+    }
+    writexy.close();
+    write_angle_deg.close();
 
     return 0;
-} //main function
-
-
-//function definition
-//calculation of radius
-double radius(double x,double y,double a,double b){
-
-    return sqrt(pow((x-a),2)+pow((y-b),2));
-}
-
-//calculation of angle for x (COS X)
-double radianX(double radius, double x, double a){
-
-        return acos((x-a)/radius);
-}
-
-//calculation of angle for y (SIN Y)
-double radianY(double radius, double y, double b){
-
-    return asin((y-b)/radius);
-}
-
-//calculation of xnew
-double xnew(double radnew, abnew newcenter, double radXnew){
-
-   return (radnew*cos(radXnew)) + newcenter.anew;
-}
-
-//calculation of ynew
-double ynew(double radnew, abnew newcenter, double radYnew){
-
-   return (radnew*sin(radYnew)) + newcenter.bnew;
 }
