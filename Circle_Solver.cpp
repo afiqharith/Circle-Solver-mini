@@ -65,7 +65,7 @@ public:
         return (radius_val * sin(angle_y)) + new_centroidB;
     }
 
-} cal;
+} * cal;
 
 int main()
 {
@@ -75,19 +75,21 @@ int main()
     ofstream writexy("new_xy.csv");
     ofstream write_angle_deg("angle_in_degree.csv");
 
+    cal = new Calculation;
+
     for (index = 0; index < SIZE; index++)
     {
         read >> x[index];
         read >> y[index];
 
         // Question 1
-        radius_val[index] = cal.radius(x[index], y[index], centroidA, centroidB);
-        angle_x[index] = cal.radian_x(radius_val[index], x[index], centroidA);
-        angle_y[index] = cal.radian_y(radius_val[index], y[index], centroidB);
+        radius_val[index] = cal->radius(x[index], y[index], centroidA, centroidB);
+        angle_x[index] = cal->radian_x(radius_val[index], x[index], centroidA);
+        angle_y[index] = cal->radian_y(radius_val[index], y[index], centroidB);
 
         // Question 2
-        new_x[index] = cal.get_new_x(radius_val[index], new_centroidA, angle_x[index]);
-        new_y[index] = cal.get_new_y(radius_val[index], new_centroidB, angle_y[index]);
+        new_x[index] = cal->get_new_x(radius_val[index], new_centroidA, angle_x[index]);
+        new_y[index] = cal->get_new_y(radius_val[index], new_centroidB, angle_y[index]);
 
         // writexy << new_x[index] << "," << new_y[index] << endl;
         writexy << *(ptrnew_x + index) << "," << *(ptrnew_y + index) << endl;
