@@ -8,11 +8,11 @@
 //7. Structure          X
 
 #include <iostream>
+#include <direct.h>
 #include <fstream>
 #include <string>
 #include <cmath>
-using std::cout;
-using std::endl;
+#include <ctime>
 using std::ifstream;
 using std::ofstream;
 using std::string;
@@ -67,13 +67,22 @@ public:
 
 } * cal;
 
+string get_time()
+{
+
+    time_t now = time(0);
+    char *datetime = ctime(&now);
+    return datetime;
+}
+
 int main()
 {
-    int index;
 
-    ifstream read("appendix1_g3.txt");
-    ofstream writexy("new_xy.csv");
-    ofstream write_angle_deg("angle_in_degree.csv");
+    int index;
+    mkdir("./data/processed-data/");
+    ifstream read("./data/raw_data/appendix1_g3.txt");
+    ofstream writexy("./data/processed-data/new_xy.csv");
+    ofstream write_angle_deg("./data/processed-data/angle_in_degree.csv");
 
     cal = new Calculation;
 
@@ -92,11 +101,10 @@ int main()
         new_y[index] = cal->get_new_y(radius_val[index], new_centroidB, angle_y[index]);
 
         // writexy << new_x[index] << "," << new_y[index] << endl;
-        writexy << *(ptrnew_x + index) << "," << *(ptrnew_y + index) << endl;
-        write_angle_deg << ((angle_x[index] * 180) / pi) << "," << ((angle_y[index] * 180) / pi) << endl;
+        writexy << *(ptrnew_x + index) << "," << *(ptrnew_y + index) << std::endl;
+        write_angle_deg << ((angle_x[index] * 180) / pi) << "," << ((angle_y[index] * 180) / pi) << std::endl;
     }
     writexy.close();
     write_angle_deg.close();
-
     return 0;
 }
