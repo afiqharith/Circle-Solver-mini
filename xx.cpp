@@ -12,10 +12,6 @@
 #include <fstream>
 #include <string>
 #include <cmath>
-#include <ctime>
-using std::ifstream;
-using std::ofstream;
-using std::string;
 
 const int centroidA = 256;
 const int centroidB = 256;
@@ -80,22 +76,14 @@ public:
 
 } * cal;
 
-string get_time()
-{
-
-    time_t now = time(0);
-    char *datetime = ctime(&now);
-    return datetime;
-}
-
 int main()
 {
 
     int index;
     mkdir("./data/processed-data/");
-    ifstream read("./data/raw_data/appendix1_g3.txt");
-    ofstream writexy("./data/processed-data/new_xy.csv");
-    ofstream write_angle_deg("./data/processed-data/angle_in_degree.csv");
+    std::ifstream read("./data/raw_data/appendix1_g3.txt");
+    std::ofstream writexy("./data/processed-data/new_xy.csv");
+    std::ofstream write_angle_deg("./data/processed-data/angle_in_degree.csv");
 
     cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
 
