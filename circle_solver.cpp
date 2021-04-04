@@ -73,8 +73,7 @@ public:
     {
         return (radius_val * sin(angle_y)) + new_centroid_B;
     }
-
-} * cal;
+};
 
 int main()
 {
@@ -85,7 +84,7 @@ int main()
     std::ofstream writexy("./data/processed-data/new_xy.csv");
     std::ofstream write_angle_deg("./data/processed-data/angle_in_degree.csv");
 
-    cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
+    Calculation *cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
 
     for (index = 0; index < SIZE; index++)
     {
