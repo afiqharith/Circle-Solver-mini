@@ -19,10 +19,10 @@ const int new_centroidA = 232;
 const int new_centroidB = 320;
 
 const double pi = 3.14159265;
-const int SIZE = 100;
+const int size = 100;
 
-double x[SIZE], y[SIZE], radius_val[SIZE], angle_x[SIZE], angle_y[SIZE]; // Question 1
-double new_x[SIZE], new_y[SIZE];                                         // Question 2
+double x[size], y[size], radius_val[size], angle_x[size], angle_y[size]; // Question 1
+double new_x[size], new_y[size];                                         // Question 2
 
 // usage of pointer
 double *ptrnew_x = new_x;
@@ -77,33 +77,32 @@ public:
 
 int main()
 {
-
-    int index;
-    mkdir("./data/processed-data/");
+    mkdir("./data/processed_data/");
     std::ifstream read("./data/raw_data/appendix1_g3.txt");
-    std::ofstream writexy("./data/processed-data/new_xy.csv");
-    std::ofstream write_angle_deg("./data/processed-data/angle_in_degree.csv");
+    std::ofstream writexy("./data/processed_data/new_xy.csv");
+    std::ofstream write_angle_deg("./data/processed_data/angle_in_degree.csv");
 
     Calculation *cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
 
-    for (index = 0; index < SIZE; index++)
+    for (int i = 1; i <= size; i++)
     {
-        read >> x[index] >> y[index];
+        read >> x[i] >> y[i];
 
         // Question 1
-        radius_val[index] = cal->radius(x[index], y[index]);
-        angle_x[index] = cal->radian_x(radius_val[index], x[index]);
-        angle_y[index] = cal->radian_y(radius_val[index], y[index]);
+        radius_val[i] = cal->radius(x[i], y[i]);
+        angle_x[i] = cal->radian_x(radius_val[i], x[i]);
+        angle_y[i] = cal->radian_y(radius_val[i], y[i]);
 
         // Question 2
-        new_x[index] = cal->get_new_x(radius_val[index], angle_x[index]);
-        new_y[index] = cal->get_new_y(radius_val[index], angle_y[index]);
+        new_x[i] = cal->get_new_x(radius_val[i], angle_x[i]);
+        new_y[i] = cal->get_new_y(radius_val[i], angle_y[i]);
 
-        // writexy << new_x[index] << "," << new_y[index] << endl;
-        writexy << *(ptrnew_x + index) << "," << *(ptrnew_y + index) << std::endl;
-        write_angle_deg << ((angle_x[index] * 180) / pi) << "," << ((angle_y[index] * 180) / pi) << std::endl;
+        // writexy << new_x[i] << "," << new_y[i] << endl;
+        writexy << *(ptrnew_x + i) << "," << *(ptrnew_y + i) << std::endl;
+        write_angle_deg << ((angle_x[i] * 180) / pi) << "," << ((angle_y[i] * 180) / pi) << std::endl;
     }
     writexy.close();
     write_angle_deg.close();
+    std::cout << "Calculation ended" << std::endl;
     return 0;
 }
