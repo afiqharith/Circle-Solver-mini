@@ -13,16 +13,16 @@
 #include <string>
 #include <cmath>
 
-#define pi 3.14159265
-#define size 100
+#define PI 3.14159265
+#define N 100
 
 const int centroidA = 256;
 const int centroidB = 256;
 const int new_centroidA = 232;
 const int new_centroidB = 320;
 
-double x[size], y[size], radius_val[size], angle_x[size], angle_y[size]; // Question 1
-double new_x[size], new_y[size];                                         // Question 2
+double x[N], y[N], radius_val[N], angle_x[N], angle_y[N]; // Question 1
+double new_x[N], new_y[N];                                // Question 2
 
 // usage of pointer
 double *ptrnew_x = new_x;
@@ -84,7 +84,7 @@ int main()
 
     Calculation *cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
 
-    for (int i = 1; i <= size; i++)
+    for (int i = 1; i <= N; i++)
     {
         read >> x[i] >> y[i];
 
@@ -98,7 +98,7 @@ int main()
         new_y[i] = cal->get_new_y(radius_val[i], angle_y[i]);
 
         writexy << *(ptrnew_x + i) << "," << *(ptrnew_y + i) << std::endl;
-        write_angle_deg << ((angle_x[i] * 180) / pi) << "," << ((angle_y[i] * 180) / pi) << std::endl;
+        write_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
     }
     writexy.close();
     write_angle_deg.close();
