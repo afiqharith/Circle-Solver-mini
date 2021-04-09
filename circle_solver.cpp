@@ -13,13 +13,13 @@
 #include <string>
 #include <cmath>
 
+#define pi 3.14159265
+#define size 100
+
 const int centroidA = 256;
 const int centroidB = 256;
 const int new_centroidA = 232;
 const int new_centroidB = 320;
-
-const double pi = 3.14159265;
-const int size = 100;
 
 double x[size], y[size], radius_val[size], angle_x[size], angle_y[size]; // Question 1
 double new_x[size], new_y[size];                                         // Question 2
