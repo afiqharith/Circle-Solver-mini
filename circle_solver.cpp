@@ -97,7 +97,6 @@ int main()
         new_x[i] = cal->get_new_x(radius_val[i], angle_x[i]);
         new_y[i] = cal->get_new_y(radius_val[i], angle_y[i]);
 
-        // writexy << new_x[i] << "," << new_y[i] << endl;
         writexy << *(ptrnew_x + i) << "," << *(ptrnew_y + i) << std::endl;
         write_angle_deg << ((angle_x[i] * 180) / pi) << "," << ((angle_y[i] * 180) / pi) << std::endl;
     }
