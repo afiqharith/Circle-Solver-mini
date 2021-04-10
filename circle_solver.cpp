@@ -1,17 +1,20 @@
-// ECE 431
-// Circle Solver by group 3
-//1. Control structure  X
-//3. Function           *
-//4. Array              *
-//5. Pointers           *
-//6. File processing    *
-//7. Structure          X
+/*
+ECE 431
+Circle Solver by Group 3
+1. Control structure  X
+3. Function           *
+4. Array              *
+5. Pointers           *
+6. File processing    *
+7. Structure          X
+*/
 
 #include <iostream>
 #include <direct.h>
 #include <fstream>
 #include <string>
 #include <cmath>
+#include <array>
 
 #define PI 3.14159265
 #define N 100
@@ -21,7 +24,7 @@ const int centroidB = 256;
 const int new_centroidA = 232;
 const int new_centroidB = 320;
 
-double x[N], y[N], radius_val[N], angle_x[N], angle_y[N]; // Question 1
+std::array<double, N> x, y, radius_val, angle_x, angle_y; // Question 1
 double new_x[N], new_y[N];                                // Question 2
 
 // usage of pointer
@@ -84,7 +87,7 @@ int main()
 
     Calculation *cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
 
-    for (int i = 1; i <= N; i++)
+    for (int i = 0; i < N; i++)
     {
         read >> x[i] >> y[i];
 
