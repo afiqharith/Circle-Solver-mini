@@ -24,12 +24,12 @@ const int centroidB = 256;
 const int new_centroidA = 232;
 const int new_centroidB = 320;
 
-std::array<double, N> x, y, radius_val, angle_x, angle_y; // Question 1
-double new_x[N], new_y[N];                                // Question 2
+// Variable for Question 1 (Q1)
+std::array<double, N> x, y, radius_val, angle_x, angle_y;
 
-// usage of pointer
-double *ptrnew_x = new_x;
-double *ptrnew_y = new_y;
+// Variable for Question 2 (Q2)
+double *new_x = new double[N];
+double *new_y = new double[N];
 
 class Calculation
 {
@@ -97,10 +97,10 @@ int main()
         angle_y[i] = cal->radian_y(radius_val[i], y[i]);
 
         // Question 2
-        new_x[i] = cal->get_new_x(radius_val[i], angle_x[i]);
-        new_y[i] = cal->get_new_y(radius_val[i], angle_y[i]);
+        *(new_x + i) = cal->get_new_x(radius_val[i], angle_x[i]);
+        *(new_y + i) = cal->get_new_y(radius_val[i], angle_y[i]);
 
-        writexy << *(ptrnew_x + i) << "," << *(ptrnew_y + i) << std::endl;
+        writexy << *(new_x + i) << "," << *(new_y + i) << std::endl;
         write_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
     }
     writexy.close();
