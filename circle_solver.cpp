@@ -105,6 +105,8 @@ int main()
     }
     writexy.close();
     write_angle_deg.close();
+    delete[] new_x;
+    delete[] new_y;
     std::cout << "Calculation ended" << std::endl;
     return 0;
 }
