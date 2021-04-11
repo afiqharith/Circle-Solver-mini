@@ -98,6 +98,7 @@ int main()
     write_angle_deg.close();
     delete[] new_x;
     delete[] new_y;
+    delete cal;
     std::cout << "Calculation ended" << std::endl;
     return 0;
 }
