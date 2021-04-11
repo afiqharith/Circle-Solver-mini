@@ -19,11 +19,6 @@ Circle Solver by Group 3
 #define PI 3.14159265
 #define N 100
 
-const int centroidA = 256;
-const int centroidB = 256;
-const int new_centroidA = 232;
-const int new_centroidB = 320;
-
 // Variable for Question 1 (Q1)
 std::array<double, N> x, y, radius_val, angle_x, angle_y;
 
@@ -34,19 +29,15 @@ double *new_y = new double[N];
 class Calculation
 {
 private:
-    int centroid_A;
-    int centroid_B;
-    int new_centroid_A;
-    int new_centroid_B;
+    const int centroid_A;
+    const int centroid_B;
+    const int new_centroid_A;
+    const int new_centroid_B;
 
 public:
-    Calculation(int centroidA, int centroidB, int new_centroidA, int new_centroidB)
-    {
-        centroid_A = centroidA;
-        centroid_B = centroidB;
-        new_centroid_A = new_centroidA;
-        new_centroid_B = new_centroidB;
-    }
+    // Initializer list for given const value
+    Calculation() : centroid_A(256), centroid_B(256), new_centroid_A(232), new_centroid_B(320) {}
+
     // Calculate radius
     double radius(double x, double y)
     {
@@ -85,7 +76,7 @@ int main()
     std::ofstream writexy("./data/processed_data/new_xy.csv");
     std::ofstream write_angle_deg("./data/processed_data/angle_in_degree.csv");
 
-    Calculation *cal = new Calculation(centroidA, centroidB, new_centroidA, new_centroidB);
+    Calculation *cal = new Calculation;
 
     for (int i = 0; i < N; i++)
     {
