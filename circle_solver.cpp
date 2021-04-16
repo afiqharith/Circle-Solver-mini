@@ -12,7 +12,6 @@ Circle Solver by Group 3
 #include <iostream>
 #include <direct.h>
 #include <fstream>
-#include <string>
 #include <cmath>
 #include <array>
 
