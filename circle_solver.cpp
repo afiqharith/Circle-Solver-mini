@@ -71,30 +71,39 @@ public:
 int main()
 {
     mkdir("./data/processed_data/");
-    std::ifstream read("./data/raw_data/appendix1_g3.txt");
-    std::ofstream writexy("./data/processed_data/new_xy.csv");
-    std::ofstream write_angle_deg("./data/processed_data/angle_in_degree.csv");
+    std::ifstream read("./data/raw_data/appendix1_g3.txt", std::ios::in);
+    std::ofstream writexy("./data/processed_data/new_xy.csv", std::ios::out);
+    std::ofstream write_angle_deg("./data/processed_data/angle_in_degree.csv", std::ios::out);
 
     Calculation *cal = new Calculation;
 
-    for (int i = 0; i < N; i++)
+    if (read.is_open() && writexy.is_open() && write_angle_deg.is_open())
     {
-        read >> x[i] >> y[i];
+        for (int i = 0; i < N; i++)
+        {
+            read >> x[i] >> y[i];
 
-        // Question 1
-        radius_val[i] = cal->radius(x[i], y[i]);
-        angle_x[i] = cal->radian_x(radius_val[i], x[i]);
-        angle_y[i] = cal->radian_y(radius_val[i], y[i]);
+            // Question 1
+            radius_val[i] = cal->radius(x[i], y[i]);
+            angle_x[i] = cal->radian_x(radius_val[i], x[i]);
+            angle_y[i] = cal->radian_y(radius_val[i], y[i]);
 
-        // Question 2
-        *(new_x + i) = cal->get_new_x(radius_val[i], angle_x[i]);
-        *(new_y + i) = cal->get_new_y(radius_val[i], angle_y[i]);
+            // Question 2
+            *(new_x + i) = cal->get_new_x(radius_val[i], angle_x[i]);
+            *(new_y + i) = cal->get_new_y(radius_val[i], angle_y[i]);
 
-        writexy << *(new_x + i) << "," << *(new_y + i) << std::endl;
-        write_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
+            writexy << *(new_x + i) << "," << *(new_y + i) << std::endl;
+            write_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
+        }
     }
+    else
+    {
+        std::cout << "Can't open one of the files" << std::endl;
+    }
+
     writexy.close();
     write_angle_deg.close();
+
     delete[] new_x;
     delete[] new_y;
     delete cal;
