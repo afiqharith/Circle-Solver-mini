@@ -71,17 +71,21 @@ public:
 int main()
 {
     mkdir("./data/processed_data/");
-    std::ifstream read("./data/raw_data/appendix1_g3.txt", std::ios::in);
-    std::ofstream writexy("./data/processed_data/new_xy.csv", std::ios::out);
-    std::ofstream write_angle_deg("./data/processed_data/angle_in_degree.csv", std::ios::out);
+
+    std::ifstream inFile;
+    inFile.open("./data/raw_data/appendix1_g3.txt", std::ios::binary | std::ios::in);
+
+    std::ofstream outFile_newxy, outFile_angle_deg;
+    outFile_newxy.open("./data/processed_data/new_xy.csv", std::ios::binary | std::ios::out);
+    outFile_angle_deg.open("./data/processed_data/angle_in_degree.csv", std::ios::binary | std::ios::out);
 
     Calculation *cal = new Calculation;
 
-    if (read.is_open() && writexy.is_open() && write_angle_deg.is_open())
+    if (inFile.is_open() && outFile_newxy.is_open() && outFile_angle_deg.is_open())
     {
         for (int i = 0; i < N; i++)
         {
-            read >> x[i] >> y[i];
+            inFile >> x[i] >> y[i];
 
             // Question 1
             radius_val[i] = cal->radius(x[i], y[i]);
@@ -92,17 +96,17 @@ int main()
             *(new_x + i) = cal->get_new_x(radius_val[i], angle_x[i]);
             *(new_y + i) = cal->get_new_y(radius_val[i], angle_y[i]);
 
-            writexy << *(new_x + i) << "," << *(new_y + i) << std::endl;
-            write_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
+            outFile_newxy << *(new_x + i) << "," << *(new_y + i) << std::endl;
+            outFile_angle_deg << ((angle_x[i] * 180) / PI) << "," << ((angle_y[i] * 180) / PI) << std::endl;
         }
+        inFile.close();
+        outFile_newxy.close();
+        outFile_angle_deg.close();
     }
     else
     {
         std::cout << "Can't open one of the files" << std::endl;
     }
-
-    writexy.close();
-    write_angle_deg.close();
 
     delete[] new_x;
     delete[] new_y;
